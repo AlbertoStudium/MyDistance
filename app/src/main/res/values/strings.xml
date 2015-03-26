@@ -4,5 +4,10 @@
     <string name="app_name">MyDistance</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="OrigenDistanceLayout">Origen:</string>
+    <string name="DestinoDistanceLayout">Destino:</string>
+    <string name="ModViaje">Modo de viaje:</string>
+    <string name="TiempTrayect">Tiempo de trayecto:</string>
+    <string name="DistanciaKm">Distancia:</string>
 
 </resources>

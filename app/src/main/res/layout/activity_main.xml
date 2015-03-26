@@ -27,7 +27,7 @@
                 android:width="120dp"
                 android:id="@+id/OrigenTxt"/>
 
-        <EditText android:layout_width="140dp"
+        <EditText android:layout_width="210dp"
                   android:layout_height="wrap_content"
                   android:id="@+id/OrigenCliente"
                 />
@@ -48,16 +48,30 @@
                 android:width="120dp"
                 android:id="@+id/DestinoTxt"/>
 
-        <EditText android:layout_width="140dp"
+        <EditText android:layout_width="210dp"
                   android:layout_height="wrap_content"
                   android:id="@+id/DestinoCliente"
                 />
     </LinearLayout>
     <Button
-            style="?android:attr/buttonStyleSmall"
+            style="?android:attr/buttonStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Enviar"
             android:id="@+id/enviar" android:layout_below="@+id/Destino" android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"/>
+            android:layout_alignParentStart="true" android:layout_alignRight="@+id/Destino"
+            android:layout_alignEnd="@+id/Destino"/>
+
+    <FrameLayout android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                  android:layout_below="@+id/enviar"
+                  android:layout_marginTop="10dp">
+
+        <ListView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/listView" android:layout_centerVertical="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" android:layout_gravity="center_horizontal|top"/>
+    </FrameLayout>
 </RelativeLayout>
