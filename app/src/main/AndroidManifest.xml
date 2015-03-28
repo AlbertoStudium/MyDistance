@@ -16,6 +16,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <provider
+        android:authorities="com.example.android.mydistance.app"
+        android:name=".Data.DistanceProvider"
+        android:exported="false"
+        android:syncable="true" />
+
     </application>
 
 </manifest>
