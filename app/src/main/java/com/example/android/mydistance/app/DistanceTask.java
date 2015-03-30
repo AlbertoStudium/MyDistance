@@ -1,8 +1,13 @@
 package com.example.android.mydistance.app;
 
+import android.content.ContentResolver;
+import android.content.ContentValues;
+import android.content.Context;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.Toast;
+import com.example.android.mydistance.app.Data.DistanceProvider;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -17,15 +22,23 @@ import java.net.URL;
 /**
  * Created by alberto on 20/03/2015.
  */
-public class DistanceTask extends AsyncTask<String,Void,Void>{
+public class DistanceTask extends AsyncTask<String,Void,Uri>{
 
 
     private static final String LOG_TAG = "LOG";
     private String ResumenDistancia;
+    private String status;
+    private Context context;
+    private Escuchador escuchador;
+
+    public DistanceTask(Context context, Escuchador escuchador) {
+        this.context = context;
+        this.escuchador = escuchador;
+    }
 
 
     @Override
-    protected Void doInBackground(String... params) {
+    protected Uri doInBackground(String... params) {
 
         String Origen = params[0];
         String Destino =params[1];
@@ -69,6 +82,25 @@ public class DistanceTask extends AsyncTask<String,Void,Void>{
             ParseJsonTask json = new ParseJsonTask(ResumenDistancia);
 
             json.ReadJson();
+            status = json.getStatus();
+
+            if (status.equals("OK")){
+
+                ContentValues values = new ContentValues();
+
+                values.put(DistanceProvider.Distance.COL_ORIGEN, json.getOrigin());
+                values.put(DistanceProvider.Distance.COL_DESTINO, json.getDestination());
+                values.put(DistanceProvider.Distance.COL_DISTANCIA, json.getDistance());
+                values.put(DistanceProvider.Distance.COL_DURACION, json.getDuration());
+
+
+                ContentResolver cr = context.getContentResolver();
+
+                Uri newUriElement = cr.insert(DistanceProvider.CONTENT_URI, values);
+                return newUriElement;
+            }
+
+
           //  Log.e(LOG_TAG,ResumenDistancia);
 
 
@@ -93,5 +125,11 @@ public class DistanceTask extends AsyncTask<String,Void,Void>{
 
 
         return null;
+    }
+
+    @Override
+    protected void onPostExecute(Uri uri) {
+        super.onPostExecute(uri);
+        escuchador.heTerminado(uri);
     }
 }

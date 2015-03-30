@@ -81,4 +81,23 @@ public class ParseJsonTask {
  }
 
 
+    public String getDistance() {
+        return distance;
+    }
+
+    public String getDuration() {
+        return duration;
+    }
+
+    public String getOrigin() {
+        return origin;
+    }
+
+    public String getDestination() {
+        return destination;
+    }
+
+    public String getStatus() {
+        return status;
+    }
 }

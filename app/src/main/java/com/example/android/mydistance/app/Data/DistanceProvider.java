@@ -14,7 +14,7 @@ import android.provider.BaseColumns;
  */
 public class DistanceProvider extends ContentProvider {
 
-    private static final String TABLA_DISTANCE = "distancedb";
+    private static final String TABLA_DISTANCE = "DistanciaTask";
     private DistanceSqliteHelper Dishelper;
     //Definición del CONTENT_URI
     private static final String uri = "content://com.example.android.mydistance.app/"+TABLA_DISTANCE;
@@ -36,7 +36,7 @@ public class DistanceProvider extends ContentProvider {
     public boolean onCreate() {
 
         Dishelper = new DistanceSqliteHelper(getContext());
-        return false;
+        return true;
     }
 
     @Override

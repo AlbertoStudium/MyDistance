@@ -12,10 +12,11 @@ public class DistanceSqliteHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
 
     public static final String DATABASE_NAME = "distancedb";
+    public static final String TABLE_NAME = "DistanciaTask";
 
     //Sentencia SQL para crear la tabla del historial de distancias
-    String sqlCreate = "CREATE TABLE DistanciaTask " +
-            "(_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+    private String sqlCreate = "CREATE TABLE " + TABLE_NAME +
+            " (_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
             " Origen TEXT, " +
             " Destino TEXT, " +
             " Distancia TEXT," +
@@ -30,10 +31,10 @@ public class DistanceSqliteHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
 
         //Se ejecuta la sentencia SQL de creación de la tabla
-        db.execSQL(sqlCreate);
+        db.execSQL(this.sqlCreate);
 
         //Insertamos 15 Distancias de ejemplo
-        for(int i=1; i<=7; i++)
+        for(int i=1; i<=15; i++)
         {
             //Generamos los datos de muestra
             String origen = "Sevilla, Sevilla, España"+ i;
@@ -42,7 +43,7 @@ public class DistanceSqliteHelper extends SQLiteOpenHelper {
             String duracion = "1h 35 min";
 
             //Insertamos los datos en la tabla Clientes
-            db.execSQL("INSERT INTO Distancia (Origen, Destino, Distancia, Duracion) " +
+            db.execSQL("INSERT INTO "+TABLE_NAME+" (Origen, Destino, Distancia, Duracion) " +
                     "VALUES ('" + origen + "', '" + destino +"', '" + distancia + "', '"+ duracion +"')");
         }
 
@@ -52,9 +53,9 @@ public class DistanceSqliteHelper extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
 
         //Se elimina la versión anterior de la tabla
-        db.execSQL("DROP TABLE IF EXISTS Clientes");
+        db.execSQL("DROP TABLE IF EXISTS "+TABLE_NAME);
 
         //Se crea la nueva versión de la tabla
-        db.execSQL(sqlCreate);
+        db.execSQL(this.sqlCreate);
     }
 }
