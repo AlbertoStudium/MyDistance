@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+
+
+
+    <ListPreference
+            android:key="@string/mode"
+            android:title="Preferencias de viaje"
+            android:dialogTitle="@string/tituloOpcionesMode"
+            android:entries="@array/titulosValues"
+            android:entryValues="@array/ModeValues"
+            android:defaultValue="@string/DefaultMode" />
+
+</PreferenceScreen>

@@ -10,5 +10,10 @@
     <string name="TiempTrayect">Tiempo de trayecto:</string>
     <string name="DistanciaKm">Distancia:</string>
     <string name="title_activity_respuesta">RespuestaActivity</string>
+    <string name="title_activity_settings">Settings</string>
+    <string name="DefaultMode">driving</string>
+    <string name="tituloOpcionesMode">indicar modo de viaje</string>
+    <string name="mode">mode</string>
+    <string name="action_share">Share</string>
 
 </resources>

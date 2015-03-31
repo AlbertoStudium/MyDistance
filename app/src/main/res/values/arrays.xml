@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="titulosValues">
+        <item>Coche</item>
+        <item>Andando</item>
+
+    </string-array>
+    <string-array name="ModeValues">
+        <item>driving</item>
+        <item>walking</item>
+
+    </string-array>
+</resources>

@@ -30,7 +30,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Load
     private String[] arrayOrigen;
     private List<String> DistanceForecast;
     private int id;
-  //  private String[] arrayid;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +64,8 @@ public class MainActivity extends Activity implements View.OnClickListener, Load
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+
+            startActivity(new Intent(this, SettingsActivity.class));
             return true;
         }
 

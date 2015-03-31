@@ -7,12 +7,13 @@ import android.content.Intent;
 import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 import com.example.android.mydistance.app.Data.DistanceProvider;
+import android.support.v7.widget.ShareActionProvider;
+import android.support.v4.view.MenuItemCompat;
 
 
 public class RespuestaActivity extends Activity implements LoaderManager.LoaderCallbacks<Cursor>{
@@ -22,7 +23,7 @@ public class RespuestaActivity extends Activity implements LoaderManager.LoaderC
     private String destino;
     private String duracion;
     private String distancia;
-
+    ShareActionProvider mShareActionProvider;
 
 
 
@@ -42,10 +43,30 @@ public class RespuestaActivity extends Activity implements LoaderManager.LoaderC
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_respuesta, menu);
+        getMenuInflater().inflate(R.menu.shared, menu);
+
+        MenuItem menuItem = menu.findItem(R.id.action_share);
+
+         mShareActionProvider = (ShareActionProvider) MenuItemCompat.getActionProvider(menuItem);
+
+        if (mShareActionProvider != null ) {
+            mShareActionProvider.setShareIntent(createShareForecastIntent());
+        } else {
+
+        }
+
+
         return true;
     }
 
+    private Intent createShareForecastIntent() {
+        Intent shareIntent = new Intent(Intent.ACTION_SEND);
+        shareIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
+        shareIntent.setType("text/plain");
+        shareIntent.putExtra(Intent.EXTRA_TEXT,"compartir" );
+        return shareIntent;
+    }
+//this.origen+"/n"+this.destino+"/n"+this.distancia+"/n"+this.duracion
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -53,10 +74,12 @@ public class RespuestaActivity extends Activity implements LoaderManager.LoaderC
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
+
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
         }
+
 
         return super.onOptionsItemSelected(item);
     }
