@@ -8,6 +8,7 @@ import android.content.Loader;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
@@ -16,7 +17,7 @@ import android.support.v7.widget.ShareActionProvider;
 import android.support.v4.view.MenuItemCompat;
 
 
-public class RespuestaActivity extends Activity implements LoaderManager.LoaderCallbacks<Cursor>{
+public class RespuestaActivity extends ActionBarActivity implements LoaderManager.LoaderCallbacks<Cursor>{
     private static final int LIST_ID = 0;
 
     private String origen;
@@ -24,7 +25,7 @@ public class RespuestaActivity extends Activity implements LoaderManager.LoaderC
     private String duracion;
     private String distancia;
     ShareActionProvider mShareActionProvider;
-
+    String nuevaLinea=System.getProperty("line.separator");
 
 
 
@@ -43,7 +44,8 @@ public class RespuestaActivity extends Activity implements LoaderManager.LoaderC
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.shared, menu);
+        getMenuInflater().inflate(R.menu.menu_respuesta, menu);
+
 
         MenuItem menuItem = menu.findItem(R.id.action_share);
 
@@ -63,7 +65,7 @@ public class RespuestaActivity extends Activity implements LoaderManager.LoaderC
         Intent shareIntent = new Intent(Intent.ACTION_SEND);
         shareIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_WHEN_TASK_RESET);
         shareIntent.setType("text/plain");
-        shareIntent.putExtra(Intent.EXTRA_TEXT,"compartir" );
+        shareIntent.putExtra(Intent.EXTRA_TEXT,this.origen+nuevaLinea+this.destino+nuevaLinea+this.distancia+nuevaLinea+this.duracion );
         return shareIntent;
     }
 //this.origen+"/n"+this.destino+"/n"+this.distancia+"/n"+this.duracion
