@@ -12,10 +12,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.Toast;
+import android.widget.*;
 import com.example.android.mydistance.app.Data.AccesProvider;
 import com.example.android.mydistance.app.Data.DistanceProvider;
 
@@ -29,9 +26,12 @@ public class MainActivity extends Activity implements View.OnClickListener, Load
 
     private static final int LIST_ID = 0;
     private ArrayList<String> data = new ArrayList<String>();
+    private ArrayList<String> uriSelected = new ArrayList<String>();
     private String[] arrayDestino;
     private String[] arrayOrigen;
     private List<String> DistanceForecast;
+    private int id;
+  //  private String[] arrayid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,7 +92,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Load
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
 
         Uri CONTENT_URI = DistanceProvider.CONTENT_URI;
-        return new CursorLoader(this, CONTENT_URI, null, null, null, null);
+        return new CursorLoader(this, CONTENT_URI, null, null, null, "_ID DESC");
     }
 
     @Override
@@ -102,18 +102,18 @@ public class MainActivity extends Activity implements View.OnClickListener, Load
 
         int colOrigen = cursor.getColumnIndex(DistanceProvider.Distance.COL_ORIGEN);
         int colDestino = cursor.getColumnIndex(DistanceProvider.Distance.COL_DESTINO);
-       // int colDuracion = cursor.getColumnIndex(DistanceProvider.Distance.COL_DURACION);
-       // int colDistancia = cursor.getColumnIndex(DistanceProvider.Distance.COL_DISTANCIA);
-       // int colId = cursor.getColumnIndex(DistanceProvider.Distance._ID);
+        int colId = cursor.getColumnIndex(DistanceProvider.Distance._ID);
 
-        do {
+        for(int i =0;i<=10;i++) {
 
             this.arrayOrigen = cursor.getString(colOrigen).split(",");
             this.arrayDestino = cursor.getString(colDestino).split(",");
+            this.id = cursor.getInt(colId);
+            this.uriSelected.add(DistanceProvider.CONTENT_URI+"/"+String.valueOf(id));
             data.add(this.arrayOrigen[0]+", "+this.arrayOrigen[1]+" / "+this.arrayDestino[0]+", "+this.arrayDestino[1]);
-            // data.add(String.valueOf(cursor.getInt(colId)));
+            cursor.moveToNext();
 
-        } while (cursor.moveToNext());
+        }
 
         this.DistanceForecast = new ArrayList<String>(this.data);
 
@@ -125,6 +125,18 @@ public class MainActivity extends Activity implements View.OnClickListener, Load
                         this.DistanceForecast);
         ListView listView = (ListView) findViewById(R.id.listView);
         listView.setAdapter(forecastAdapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+              //  Log.d(LOG_TAG,uri.toString());
+                Intent intent = new Intent(getApplicationContext(),RespuestaActivity.class);
+                intent.putExtra("Consulta", uriSelected.get(position));
+                startActivity(intent);
+
+            }
+        });
 
 
         }
