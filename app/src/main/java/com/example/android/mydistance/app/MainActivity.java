@@ -13,7 +13,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.*;
-import com.example.android.mydistance.app.Data.AccesProvider;
 import com.example.android.mydistance.app.Data.DistanceProvider;
 
 import java.util.ArrayList;
