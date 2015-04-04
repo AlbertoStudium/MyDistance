@@ -27,12 +27,16 @@ public class BuildUriTask {
     private static final String SENSOR= "sensor";
     private static final String BASEURL = "https://maps.googleapis.com/maps/api/distancematrix/json?";
     private static final String ORIGIN = "origins";
+    private static final String MODE = "mode";
 
 
 
-    public BuildUriTask(String destino, String origen) {
+    public BuildUriTask(String destino, String origen, String mode) {
         this.destino = destino;
         this.origen = origen;
+        this.mode = mode;
+
+
     }
 
    public URL  GetUrl() {
@@ -41,6 +45,7 @@ public class BuildUriTask {
        Uri builtUri = Uri.parse(BASEURL).buildUpon()
                .appendQueryParameter(ORIGIN, this.origen)
                .appendQueryParameter(DESTINATION, this.destino)
+               .appendQueryParameter(MODE, this.mode)
                .appendQueryParameter(LANGUAGE, this.language)
                .appendQueryParameter(SENSOR, this.sensor)
                .build();

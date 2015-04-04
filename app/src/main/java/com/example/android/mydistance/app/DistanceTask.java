@@ -28,6 +28,7 @@ public class DistanceTask extends AsyncTask<String,Void,Uri>{
     private static final String LOG_TAG = "LOG";
     private String ResumenDistancia;
     private String status;
+    private String status2;
     private Context context;
     private Escuchador escuchador;
 
@@ -42,13 +43,14 @@ public class DistanceTask extends AsyncTask<String,Void,Uri>{
 
         String Origen = params[0];
         String Destino =params[1];
+        String Mode =params[2];
 
 
 
         HttpURLConnection urlConnection = null;
         BufferedReader reader = null;
         try {
-            BuildUriTask peticionUrl = new BuildUriTask(Destino,Origen);
+            BuildUriTask peticionUrl = new BuildUriTask(Destino,Origen,Mode);
             URL url = peticionUrl.GetUrl();
 
 
@@ -83,8 +85,10 @@ public class DistanceTask extends AsyncTask<String,Void,Uri>{
 
             json.ReadJson();
             status = json.getStatus();
+            status2 = json.getStatus2();
 
-            if (status.equals("OK")){
+
+            if (status.equals("OK")&& status2.equals("OK")){
 
                 ContentValues values = new ContentValues();
 
@@ -98,6 +102,9 @@ public class DistanceTask extends AsyncTask<String,Void,Uri>{
 
                 Uri newUriElement = cr.insert(DistanceProvider.CONTENT_URI, values);
                 return newUriElement;
+            }else{
+
+                return null;
             }
 
 

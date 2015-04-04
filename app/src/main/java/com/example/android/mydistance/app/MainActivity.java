@@ -1,5 +1,7 @@
 package com.example.android.mydistance.app;
 
+import android.preference.PreferenceManager;
+import android.content.SharedPreferences;
 import android.app.Activity;
 import android.app.LoaderManager;
 import android.content.CursorLoader;
@@ -30,6 +32,10 @@ public class MainActivity extends Activity implements View.OnClickListener, Load
     private String[] arrayOrigen;
     private List<String> DistanceForecast;
     private int id;
+    ListView listView;
+    ArrayAdapter<String> forecastAdapter;
+    String ModePreference;
+
 
 
     @Override
@@ -37,9 +43,12 @@ public class MainActivity extends Activity implements View.OnClickListener, Load
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
         getLoaderManager().initLoader(LIST_ID, null, this);
         View enviar = findViewById(R.id.enviar);
-       // AccesProvider acces = new AccesProvider(getApplicationContext());
+
+
+
 
         enviar.setOnClickListener(this);
 
@@ -83,7 +92,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Load
 
 
         DistanceTask distanceTask = new DistanceTask(this, this);
-       distanceTask.execute(OrigenString, DestinoString);
+       distanceTask.execute(OrigenString, DestinoString, ModePreference);
 
 
     }
@@ -93,53 +102,71 @@ public class MainActivity extends Activity implements View.OnClickListener, Load
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
 
         Uri CONTENT_URI = DistanceProvider.CONTENT_URI;
+         listView = (ListView) findViewById(R.id.listView);
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+        ModePreference = prefs.getString(getString(R.string.mode),
+                getString(R.string.DefaultMode));
+
         return new CursorLoader(this, CONTENT_URI, null, null, null, "_ID DESC");
     }
 
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
 
-        cursor.moveToFirst();
+        if (cursor.getCount()>0) {
 
-        int colOrigen = cursor.getColumnIndex(DistanceProvider.Distance.COL_ORIGEN);
-        int colDestino = cursor.getColumnIndex(DistanceProvider.Distance.COL_DESTINO);
-        int colId = cursor.getColumnIndex(DistanceProvider.Distance._ID);
 
-        for(int i =0;i<=10;i++) {
+            cursor.moveToFirst();
 
-            this.arrayOrigen = cursor.getString(colOrigen).split(",");
-            this.arrayDestino = cursor.getString(colDestino).split(",");
-            this.id = cursor.getInt(colId);
-            this.uriSelected.add(DistanceProvider.CONTENT_URI+"/"+String.valueOf(id));
-            data.add(this.arrayOrigen[0]+", "+this.arrayOrigen[1]+" / "+this.arrayDestino[0]+", "+this.arrayDestino[1]);
-            cursor.moveToNext();
+            int colOrigen = cursor.getColumnIndex(DistanceProvider.Distance.COL_ORIGEN);
+            int colDestino = cursor.getColumnIndex(DistanceProvider.Distance.COL_DESTINO);
+            int colId = cursor.getColumnIndex(DistanceProvider.Distance._ID);
+
+            do {
+
+                this.arrayOrigen = cursor.getString(colOrigen).split(",");
+                this.arrayDestino = cursor.getString(colDestino).split(",");
+                this.id = cursor.getInt(colId);
+                this.uriSelected.add(DistanceProvider.CONTENT_URI + "/" + String.valueOf(id));
+             //   data.add(this.arrayOrigen[0] + ", " + this.arrayOrigen[1] + " / " + this.arrayDestino[0] + ", " + this.arrayDestino[1]);
+                data.add(this.arrayOrigen[0] + " / " + this.arrayDestino[0]);
+
+
+            }while(cursor.moveToNext());
+
+
+                    this.DistanceForecast = new ArrayList<String>(this.data);
+
+
+
+                forecastAdapter =
+                        new ArrayAdapter<String>(
+                                this, // The current context (this activity)
+                                R.layout.single_row_from_list, // The name of the layout ID.
+                                R.id.SingleRow, // The ID of the textview to populate.
+                                this.DistanceForecast);
+
+
+                listView.setAdapter(forecastAdapter);
+
+
+
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+                    //  Log.d(LOG_TAG,uri.toString());
+                    Intent intent = new Intent(getApplicationContext(), RespuestaActivity.class);
+                    intent.putExtra("Consulta", uriSelected.get(position));
+                    startActivity(intent);
+
+                }
+
+            });
 
         }
-
-        this.DistanceForecast = new ArrayList<String>(this.data);
-
-        ArrayAdapter<String> forecastAdapter =
-                new ArrayAdapter<String>(
-                        this, // The current context (this activity)
-                        R.layout.single_row_from_list, // The name of the layout ID.
-                        R.id.SingleRow, // The ID of the textview to populate.
-                        this.DistanceForecast);
-        ListView listView = (ListView) findViewById(R.id.listView);
-        listView.setAdapter(forecastAdapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-              //  Log.d(LOG_TAG,uri.toString());
-                Intent intent = new Intent(getApplicationContext(),RespuestaActivity.class);
-                intent.putExtra("Consulta", uriSelected.get(position));
-                startActivity(intent);
-
-            }
-        });
-
-
         }
 
         @Override
@@ -164,6 +191,17 @@ public class MainActivity extends Activity implements View.OnClickListener, Load
 
             toast.show();
         }
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+
+        data.clear();
+        uriSelected.clear();
+        getLoaderManager().restartLoader(LIST_ID, null, this);
+
 
     }
 }

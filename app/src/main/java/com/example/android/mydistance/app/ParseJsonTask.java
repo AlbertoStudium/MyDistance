@@ -29,6 +29,10 @@ public class ParseJsonTask {
     private String status;
 
 
+
+    private String status2;
+
+
     public ParseJsonTask(String json) {
         this.json = json;
     }
@@ -57,7 +61,7 @@ public class ParseJsonTask {
          JSONObject firstRowElement = new JSONObject(elements.get(0).toString());
 
          // recogemos el cuarto y quinto 0bjeto json
-
+         this.status2= firstRowElement.getString(STATUS);
          JSONObject distanceElement = firstRowElement.getJSONObject("distance");
          JSONObject durationElement = firstRowElement.getJSONObject("duration");
 
@@ -69,6 +73,7 @@ public class ParseJsonTask {
          Log.e(LOG_TAG, this.destination);
          Log.e(LOG_TAG, this.distance);
          Log.e(LOG_TAG, this.duration);
+         Log.e(LOG_TAG, this.status2);
 
 
      } catch (JSONException e) {
@@ -99,5 +104,9 @@ public class ParseJsonTask {
 
     public String getStatus() {
         return status;
+    }
+
+    public String getStatus2() {
+        return status2;
     }
 }

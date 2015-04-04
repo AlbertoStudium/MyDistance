@@ -33,19 +33,6 @@ public class DistanceSqliteHelper extends SQLiteOpenHelper {
         //Se ejecuta la sentencia SQL de creación de la tabla
         db.execSQL(this.sqlCreate);
 
-        //Insertamos 15 Distancias de ejemplo
-        for(int i=1; i<=15; i++)
-        {
-            //Generamos los datos de muestra
-            String origen = "Sevilla, Sevilla, España"+ i;
-            String destino = "Córdoba, Córdoba, España" + i;
-            String distancia = "143 km";
-            String duracion = "1h 35 min";
-
-            //Insertamos los datos en la tabla Clientes
-            db.execSQL("INSERT INTO "+TABLE_NAME+" (Origen, Destino, Distancia, Duracion) " +
-                    "VALUES ('" + origen + "', '" + destino +"', '" + distancia + "', '"+ duracion +"')");
-        }
 
     }
 

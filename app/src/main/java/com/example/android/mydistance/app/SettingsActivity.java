@@ -17,6 +17,8 @@ public class SettingsActivity extends PreferenceActivity
         super.onCreate(savedInstanceState);
 
         addPreferencesFromResource(R.xml.opciones);
+
+        bindPreferenceSummaryToValue(findPreference(getString(R.string.mode)));
     }
 
 
