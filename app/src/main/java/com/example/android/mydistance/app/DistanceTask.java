@@ -32,6 +32,7 @@ public class DistanceTask extends AsyncTask<String,Void,Uri>{
     private Context context;
     private Escuchador escuchador;
 
+
     public DistanceTask(Context context, Escuchador escuchador) {
         this.context = context;
         this.escuchador = escuchador;
@@ -96,6 +97,7 @@ public class DistanceTask extends AsyncTask<String,Void,Uri>{
                 values.put(DistanceProvider.Distance.COL_DESTINO, json.getDestination());
                 values.put(DistanceProvider.Distance.COL_DISTANCIA, json.getDistance());
                 values.put(DistanceProvider.Distance.COL_DURACION, json.getDuration());
+                values.put(DistanceProvider.Distance.COL_MODO, Mode);
 
 
                 ContentResolver cr = context.getContentResolver();

@@ -20,6 +20,7 @@ public class DistanceSqliteHelper extends SQLiteOpenHelper {
             " Origen TEXT, " +
             " Destino TEXT, " +
             " Distancia TEXT," +
+            " Modo TEXT," +
             " Duracion TEXT )";
 
 

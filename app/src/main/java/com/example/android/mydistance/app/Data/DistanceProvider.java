@@ -135,5 +135,6 @@ public class DistanceProvider extends ContentProvider {
         public static final String COL_DESTINO = "Destino";
         public static final String COL_DISTANCIA = "Distancia";
         public static final String COL_DURACION = "Duracion";
+        public static final String COL_MODO = "Modo";
     }
 }

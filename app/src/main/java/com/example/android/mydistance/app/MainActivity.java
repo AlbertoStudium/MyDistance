@@ -102,7 +102,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Load
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
 
         Uri CONTENT_URI = DistanceProvider.CONTENT_URI;
-         listView = (ListView) findViewById(R.id.listView);
+
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
 
         ModePreference = prefs.getString(getString(R.string.mode),
@@ -122,6 +122,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Load
             int colOrigen = cursor.getColumnIndex(DistanceProvider.Distance.COL_ORIGEN);
             int colDestino = cursor.getColumnIndex(DistanceProvider.Distance.COL_DESTINO);
             int colId = cursor.getColumnIndex(DistanceProvider.Distance._ID);
+            int colModo = cursor.getColumnIndex(DistanceProvider.Distance.COL_MODO);
 
             do {
 
@@ -129,8 +130,8 @@ public class MainActivity extends Activity implements View.OnClickListener, Load
                 this.arrayDestino = cursor.getString(colDestino).split(",");
                 this.id = cursor.getInt(colId);
                 this.uriSelected.add(DistanceProvider.CONTENT_URI + "/" + String.valueOf(id));
-             //   data.add(this.arrayOrigen[0] + ", " + this.arrayOrigen[1] + " / " + this.arrayDestino[0] + ", " + this.arrayDestino[1]);
-                data.add(this.arrayOrigen[0] + " / " + this.arrayDestino[0]);
+
+                data.add(this.arrayOrigen[0] + " / " + this.arrayDestino[0]+" / "+cursor.getString(colModo));
 
 
             }while(cursor.moveToNext());
@@ -147,6 +148,7 @@ public class MainActivity extends Activity implements View.OnClickListener, Load
                                 R.id.SingleRow, // The ID of the textview to populate.
                                 this.DistanceForecast);
 
+             listView = (ListView) findViewById(R.id.listView);
 
                 listView.setAdapter(forecastAdapter);
 
@@ -199,8 +201,8 @@ public class MainActivity extends Activity implements View.OnClickListener, Load
         super.onResume();
 
         data.clear();
-        uriSelected.clear();
-        getLoaderManager().restartLoader(LIST_ID, null, this);
+       uriSelected.clear();
+       getLoaderManager().restartLoader(LIST_ID, null, this);
 
 
     }

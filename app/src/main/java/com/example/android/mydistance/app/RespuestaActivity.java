@@ -68,7 +68,7 @@ public class RespuestaActivity extends ActionBarActivity implements LoaderManage
         shareIntent.putExtra(Intent.EXTRA_TEXT,this.origen+nuevaLinea+this.destino+nuevaLinea+this.distancia+nuevaLinea+this.duracion );
         return shareIntent;
     }
-//this.origen+"/n"+this.destino+"/n"+this.distancia+"/n"+this.duracion
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
