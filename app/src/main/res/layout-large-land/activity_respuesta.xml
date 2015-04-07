@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="horizontal"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent" android:weightSum="1">
+
+<LinearLayout android:layout_width="478dp"
+              android:layout_height="match_parent" android:orientation="vertical">
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:text="@string/OrigenDistanceLayout"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text=""
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:id="@+id/OrigenRespuesta"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:text="@string/DestinoDistanceLayout"/>
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:text=""
+                android:id="@+id/DestinoRespuesta"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:text="@string/TiempTrayect"/>
+        <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:text=""
+                android:id="@+id/tiempoTrayecto"/>
+
+        <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:text="@string/DistanciaKm"/>
+        <TextView
+
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:text=""
+                android:id="@+id/Distancia"/>
+
+</LinearLayout>
+
+    <LinearLayout android:layout_width="match_parent"
+                  android:layout_height="match_parent" android:weightSum="1">
+
+
+        <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="310dp"
+                android:id="@+id/imageView3" android:src="@drawable/distancemaps" android:layout_weight="0.56"
+                android:layout_gravity="center_vertical" android:layout_marginLeft="200dp"/>
+    </LinearLayout>
+</LinearLayout>
+
+
+
